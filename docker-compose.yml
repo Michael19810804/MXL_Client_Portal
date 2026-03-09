@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mxl-portal:
+    container_name: mxl-portal-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      # Map host port 8090 to container port 80
+      # You can change 8090 to any available port on your server
+      - "8090:80"
+    environment:
+      - NODE_ENV=production
