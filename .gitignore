@@ -137,7 +137,4 @@ dist-ssr
 Thumbs.db
 
 # Custom
-deploy/nginx.conf
-deploy/nginx-docker.conf
-deploy/setup_ubuntu.sh
-deploy/deploy_docker.sh
+
