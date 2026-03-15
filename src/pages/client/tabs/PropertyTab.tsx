@@ -24,30 +24,18 @@ const PropertyTab: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Hero Section */}
-      <div className="text-center max-w-3xl mx-auto space-y-4 md:space-y-6 pt-0 md:pt-4">
-        <div className="inline-flex items-center justify-center p-2 md:p-3 bg-blue-50 rounded-full mb-0 md:mb-2">
-          <HomeOutlined className="text-blue-600 text-xl md:text-2xl" />
-        </div>
-        <Title level={2} className="text-xl md:text-3xl font-bold text-gray-900">
-          曼小楼 (MXL) StayCare 房产托管
-        </Title>
-        <Paragraph className="text-sm md:text-lg text-gray-600 leading-relaxed px-2">
-          专业的泰国房产全托管服务。从合同生成、租客入住到物业维护，我们为您提供一站式无忧解决方案。
-        </Paragraph>
-        
-        <div className="flex justify-center gap-4 pt-2">
-          <Button 
-            type="primary" 
-            size="large" 
-            icon={<RightOutlined />} 
-            onClick={() => navigate('/apply')}
-            className="h-10 md:h-12 px-6 md:px-8 text-base md:text-lg rounded-full shadow-lg hover:scale-105 transition-transform bg-gradient-to-r from-blue-500 to-blue-600 border-none"
-          >
-            立即申请托管
-          </Button>
-        </div>
+    <div className="space-y-8 animate-fade-in p-4 md:p-0">
+      {/* Hero Section - Button Only */}
+      <div className="flex justify-center pt-2 md:pt-4">
+        <Button 
+          type="primary" 
+          size="large" 
+          icon={<RightOutlined />} 
+          onClick={() => navigate('/apply')}
+          className="h-10 md:h-12 px-6 md:px-8 text-base md:text-lg rounded-full shadow-lg hover:scale-105 transition-transform bg-gradient-to-r from-blue-500 to-blue-600 border-none"
+        >
+          立即申请托管
+        </Button>
       </div>
 
       {/* Services Grid */}

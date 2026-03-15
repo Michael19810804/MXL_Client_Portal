@@ -20,25 +20,25 @@ const { Title, Paragraph } = Typography;
 const LifestyleTab: React.FC = () => {
   const categories = [
     {
-      title: '专车出行 (Transport)',
+      title: '专车出行',
       desc: '机场接送、商务包车、一日游。阿尔法/奔驰等多种车型，配备双语司机。',
       icon: <CarOutlined className="text-blue-500 text-3xl" />,
       tag: '安全准时'
     },
     {
-      title: '珠宝品鉴 (Gems)',
+      title: '珠宝品鉴',
       desc: '源头矿区直供，专业鉴定证书，为您甄选高品质红蓝宝石。',
       icon: <SketchOutlined className="text-pink-500 text-3xl" />,
       tag: '私人定制'
     },
     {
-      title: '高端保险 (Insurance)',
+      title: '高端保险',
       desc: '针对在泰华人的意外险、医疗险，覆盖全泰私立医院，理赔无忧。',
       icon: <MedicineBoxOutlined className="text-red-500 text-3xl" />,
       tag: '全额赔付'
     },
     {
-      title: '医疗医美 (Medical)',
+      title: '医疗医美',
       desc: '曼谷顶级私立医院预约通道，以及医美抗衰老项目咨询。',
       icon: <HeartOutlined className="text-rose-500 text-3xl" />,
       tag: '绿色通道'
@@ -46,14 +46,7 @@ const LifestyleTab: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in pt-0 md:pt-4">
-      <div className="text-center max-w-2xl mx-auto mb-4 md:mb-8">
-        <Title level={2} className="text-xl md:text-3xl">私人订制服务</Title>
-        <Paragraph className="text-gray-500 text-sm md:text-base px-2">
-          除了基础的房产托管，我们还为您在泰国的精致生活提供全方位的私人管家支持。
-        </Paragraph>
-      </div>
-
+    <div className="space-y-6 md:space-y-8 animate-fade-in pt-0 md:pt-4 p-4 md:p-0">
       <Row gutter={[16, 16]}>
         {categories.map((item, index) => (
           <Col xs={24} sm={12} key={index}>

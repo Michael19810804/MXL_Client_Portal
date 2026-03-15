@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Upload, message, Card, Steps, Result } from 'antd';
-import { UploadOutlined, SolutionOutlined, CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Upload, message, Card, Result } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import { supabase } from '../../utils/supabase';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,11 +15,9 @@ const Apply: React.FC = () => {
   const onFinish = async (values: any) => {
     setLoading(true);
     try {
-      // 1. Upload files
-      const singleFileFields = ['passport', 'blueBook', 'prevContract'];
+      const singleFileFields = ['passport', 'blueBook', 'contract', 'projectImage'];
       const fileUrls: Record<string, string | null | string[]> = {};
 
-      // Handle single file uploads
       for (const field of singleFileFields) {
         const fileList = values[field]?.fileList;
         if (fileList && fileList.length > 0) {
@@ -27,7 +25,7 @@ const Apply: React.FC = () => {
           const fileName = `${Date.now()}_${field}_${file.name.replace(/\s+/g, '_')}`;
           
           const { data, error } = await supabase.storage
-            .from('customer_uploads')
+            .from('compliance_uploads')
             .upload(fileName, file);
 
           if (error) throw error;
@@ -37,7 +35,6 @@ const Apply: React.FC = () => {
         }
       }
 
-      // Handle multiple file upload for Title Deed
       const titleDeedFiles = values.titleDeed?.fileList;
       if (titleDeedFiles && titleDeedFiles.length > 0) {
         const uploadedPaths: string[] = [];
@@ -46,40 +43,44 @@ const Apply: React.FC = () => {
           const fileName = `${Date.now()}_titleDeed_${i}_${file.name.replace(/\s+/g, '_')}`;
           
           const { data, error } = await supabase.storage
-            .from('customer_uploads')
+            .from('compliance_uploads')
             .upload(fileName, file);
 
           if (error) throw error;
           uploadedPaths.push(data.path);
         }
-        // Store as comma-separated string or JSON string, depending on DB schema
-        // Assuming current schema is TEXT, we'll join with commas or store as JSON string
-        // Since we didn't change DB schema, let's store as comma-separated string for now to be safe with TEXT type
         fileUrls['titleDeed'] = uploadedPaths.join(',');
       } else {
         fileUrls['titleDeed'] = null;
       }
 
-      // 2. Insert into database
+      const projectImagePath = typeof fileUrls.projectImage === 'string' ? fileUrls.projectImage : null;
+      const mergedRemarks = [values.remarks?.trim(), projectImagePath ? `项目参考图: ${projectImagePath}` : null]
+        .filter(Boolean)
+        .join('\n');
+
       const { error: insertError } = await supabase
-        .from('customer_submissions')
+        .from('compliance_records')
         .insert([
           {
             name: values.name,
             phone: values.phone,
             email: values.email,
+            project: values.project || null,
+            unit: values.unit || null,
+            layout: values.layout || null,
+            remarks: mergedRemarks || null,
             passport_url: fileUrls.passport,
             title_deed_url: fileUrls.titleDeed,
             blue_book_url: fileUrls.blueBook,
-            prev_contract_url: fileUrls.prevContract,
-            status: 'pending'
+            contract_url: fileUrls.contract
           }
         ]);
 
       if (insertError) throw insertError;
 
       setCurrentStep(1);
-      message.success('提交成功！我们会尽快联系您。');
+      message.success('提交成功！资料已归档。');
       
     } catch (error: any) {
       console.error('Submission error:', error);
@@ -106,8 +107,8 @@ const Apply: React.FC = () => {
     return (
       <Result
         status="success"
-        title="申请提交成功！"
-        subTitle="我们已收到您的托管申请。MXL 团队将在 24 小时内通过电话或邮件与您联系，确认后续事宜。"
+        title="资料提交成功！"
+        subTitle="我们已收到并归档您的托管资料，后续可在后台统一管理与查看。"
         extra={[
           <Button type="primary" key="home" onClick={() => navigate('/')}>
             返回首页
@@ -123,22 +124,8 @@ const Apply: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto py-8">
       <div className="mb-8 text-center px-4">
-        <h1 className="text-xl md:text-2xl font-bold mb-2">申请房产托管服务</h1>
-        <p className="text-gray-500 text-sm md:text-base">请填写您的基本信息并上传所需文件，我们将为您定制专属托管方案。</p>
-      </div>
-
-      <div className="px-4">
-        <Steps 
-          current={currentStep} 
-          className="mb-8 md:mb-12"
-          size="small"
-          labelPlacement="vertical"
-          items={[
-            { title: '填写资料', icon: <SolutionOutlined /> },
-            { title: '等待审核', icon: <LoadingOutlined /> },
-            { title: '完成', icon: <CheckCircleOutlined /> },
-          ]} 
-        />
+        <h1 className="text-xl md:text-2xl font-bold mb-2">提交托管资料</h1>
+        <p className="text-gray-500 text-sm md:text-base">请填写基础信息并上传文件，提交后即完成归档。</p>
       </div>
 
       <Card className="shadow-sm mx-4 md:mx-0">
@@ -149,13 +136,24 @@ const Apply: React.FC = () => {
           requiredMark="optional"
           size="large"
         >
+          <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-100">
+            <h3 className="font-bold text-blue-800 mb-2 text-sm md:text-base">所需文件清单</h3>
+            <ul className="list-disc list-inside text-xs md:text-sm text-blue-700 space-y-1">
+              <li>护照首页照片 (必需)</li>
+              <li>地契复印件/照片 (必需)</li>
+              <li>房屋户口本 (小蓝本) (必需)</li>
+              <li>项目/小区名称或项目参考图 (二选一)</li>
+              <li>补充合同文件 (可选)</li>
+            </ul>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Form.Item
               name="name"
               label="您的姓名"
               rules={[{ required: true, message: '请输入姓名' }]}
             >
-              <Input placeholder="例如: Zhang San" />
+              <Input placeholder="例如: 张三" />
             </Form.Item>
             
             <Form.Item
@@ -172,22 +170,73 @@ const Apply: React.FC = () => {
             label="电子邮箱"
             rules={[{ required: true, type: 'email', message: '请输入有效的邮箱地址' }]}
           >
-            <Input placeholder="your.email@example.com" />
+            <Input placeholder="例如: name@example.com" />
           </Form.Item>
 
-          <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-100">
-            <h3 className="font-bold text-blue-800 mb-2 text-sm md:text-base">所需文件清单</h3>
-            <ul className="list-disc list-inside text-xs md:text-sm text-blue-700 space-y-1">
-              <li>护照首页照片 (必需)</li>
-              <li>地契复印件/照片 (必需)</li>
-              <li>房屋户口本 (小蓝本) (必需)</li>
-              <li>现有中介合约 (仅限中途转托管)</li>
-            </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Form.Item
+              name="project"
+              label="项目/小区"
+              rules={[
+                {
+                  validator: async (_, value) => {
+                    const imageList = form.getFieldValue('projectImage')?.fileList;
+                    if ((value && String(value).trim()) || (imageList && imageList.length > 0)) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('请填写项目/小区或上传项目参考图'));
+                  }
+                }
+              ]}
+            >
+              <Input placeholder="例如: XX Residence（不清楚可上传项目参考图）" />
+            </Form.Item>
           </div>
 
           <Form.Item
+            name="projectImage"
+            label="项目参考图/地图截图"
+            tooltip="若不清楚项目名称，可上传定位截图或小区图片"
+            extra="项目/小区文字与项目参考图二选一即可"
+          >
+            <Dragger
+              {...uploadProps}
+              accept=".jpg,.jpeg,.png,.webp,.pdf"
+              className="bg-gray-50"
+              onChange={() => {
+                form.validateFields(['project']).catch(() => undefined);
+              }}
+            >
+              <p className="ant-upload-drag-icon"><UploadOutlined className="text-blue-500" /></p>
+              <p className="ant-upload-text text-sm">点击或拖拽上传项目参考图 (可选)</p>
+            </Dragger>
+          </Form.Item>
+
+          <Form.Item
+            name="unit"
+            label="房号"
+            rules={[{ required: true, message: '请输入房号' }]}
+          >
+            <Input placeholder="例如: A-1205" />
+          </Form.Item>
+
+          <Form.Item
+            name="layout"
+            label="户型"
+          >
+            <Input placeholder="例如: 1房1厅 / 2房2卫" />
+          </Form.Item>
+
+          <Form.Item
+            name="remarks"
+            label="备注"
+          >
+            <Input.TextArea rows={3} placeholder="可补充房屋情况、交接信息等" />
+          </Form.Item>
+
+          <Form.Item
             name="passport"
-            label="护照首页 (Passport)"
+            label="护照首页"
             rules={[{ required: true, message: '请上传护照首页' }]}
             tooltip="清晰的护照个人信息页照片"
           >
@@ -199,7 +248,7 @@ const Apply: React.FC = () => {
 
           <Form.Item
             name="titleDeed"
-            label="地契 (Title Deed / Chanote)"
+            label="地契"
             rules={[{ required: true, message: '请上传地契文件' }]}
             tooltip="支持上传多张图片或PDF文件"
           >
@@ -211,7 +260,7 @@ const Apply: React.FC = () => {
 
           <Form.Item
             name="blueBook"
-            label="房屋户口本 (Blue Book / Tabien Baan)"
+            label="房屋户口本 (小蓝本)"
             rules={[{ required: true, message: '请上传房屋户口本' }]}
           >
             <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-gray-50">
@@ -221,9 +270,9 @@ const Apply: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            name="prevContract"
-            label="现有中介合约 (Previous Agent Contract)"
-            tooltip="如果您当前已有中介管理，请提供现有合约以便我们协助交接"
+            name="contract"
+            label="补充合同文件"
+            tooltip="可上传已有合同或其他需要归档的补充文件"
           >
             <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-gray-50">
               <p className="ant-upload-drag-icon"><UploadOutlined className="text-blue-500" /></p>

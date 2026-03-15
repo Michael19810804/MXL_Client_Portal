@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
 import ClientLayout from './pages/client/ClientLayout';
 import ServicePortal from './pages/client/ServicePortal';
 import Apply from './pages/client/Apply';
@@ -8,6 +9,7 @@ import Apply from './pages/client/Apply';
 const App: React.FC = () => {
   return (
     <ConfigProvider
+      locale={zhCN}
       theme={{
         token: {
           colorPrimary: '#2563eb',

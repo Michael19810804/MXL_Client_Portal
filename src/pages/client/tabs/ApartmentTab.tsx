@@ -23,7 +23,7 @@ const ApartmentTab: React.FC = () => {
   const apartments = [
     {
       title: '通罗商圈 - 高端一居室',
-      location: 'Thong Lo, Sukhumvit',
+      location: '素坤逸通罗区',
       price: '฿2,500 / 晚',
       tags: ['近BTS', '泳池健身房', '可做饭'],
       image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop',
@@ -31,7 +31,7 @@ const ApartmentTab: React.FC = () => {
     },
     {
       title: '河畔景观 - 豪华两居',
-      location: 'Riverside, IconSiam',
+      location: '湄南河畔，IconSiam 商圈',
       price: '฿4,500 / 晚',
       tags: ['绝美河景', '免费接驳船', '适合家庭'],
       image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=2080&auto=format&fit=crop',
@@ -39,7 +39,7 @@ const ApartmentTab: React.FC = () => {
     },
     {
       title: 'Rama 9 - 商务公寓',
-      location: 'Rama 9, CBD',
+      location: '拉玛九 CBD',
       price: '฿1,800 / 晚',
       tags: ['靠近夜市', '交通便利', '性价比高'],
       image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=2070&auto=format&fit=crop',
@@ -48,16 +48,7 @@ const ApartmentTab: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in pt-0 md:pt-4">
-      <div className="text-center max-w-2xl mx-auto mb-4 md:mb-8">
-        <Title level={2} className="text-xl md:text-3xl">精选公寓短租</Title>
-        <Paragraph className="text-gray-500 text-sm md:text-base px-2">
-          像当地人一样生活。我们在曼谷核心地段为您精选高品质公寓，提供酒店式清洁与管家服务。
-          <br />
-          <span className="text-blue-600 font-medium">支持周租/月租，租期越长优惠越多。</span>
-        </Paragraph>
-      </div>
-
+    <div className="space-y-8 animate-fade-in pt-0 md:pt-4 p-4 md:p-0">
       <Row gutter={[16, 16]}>
         {apartments.map((item, index) => (
           <Col xs={24} md={8} key={index}>
