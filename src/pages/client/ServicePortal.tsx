@@ -76,11 +76,10 @@ const ServicePortal: React.FC = () => {
 
   return (
 
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-12">
-      {/* Main Content */}
+    <div className="min-h-screen bw-shell pb-20 md:pb-12">
       <div className="max-w-5xl mx-auto px-0 md:px-8 mt-0 md:mt-8 relative z-20">
         <div
-          className="bg-white md:rounded-xl md:shadow-xl min-h-[600px] overflow-hidden md:border border-gray-100"
+          className="bw-card min-h-[600px] overflow-hidden"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -91,22 +90,16 @@ const ServicePortal: React.FC = () => {
             centered
             size="small"
             tabBarGutter={8}
-            tabBarStyle={{
-              marginBottom: 0,
-              paddingTop: 12,
-              backgroundColor: '#fff',
-              borderBottom: '1px solid #f0f0f0'
-            }}
+            tabBarStyle={{ marginBottom: 0, paddingTop: 12 }}
             className="custom-tabs p-0 md:p-10"
             animated={{ inkBar: true, tabPane: true }}
           />
         </div>
       </div>
 
-      {/* Floating Contact Button (Mobile Friendly) */}
       <Affix style={{ position: 'fixed', bottom: 80, right: 20, zIndex: 1000 }}>
         <button 
-          className="w-12 h-12 md:w-14 md:h-14 bg-green-500 rounded-full shadow-xl flex items-center justify-center text-white hover:bg-green-600 hover:scale-110 transition-all cursor-pointer border-none focus:outline-none"
+          className="w-12 h-12 md:w-14 md:h-14 bg-black rounded-full shadow-[4px_4px_0_#000] flex items-center justify-center text-white hover:scale-110 transition-all cursor-pointer border-2 border-black focus:outline-none"
           onClick={() => alert('请添加客服微信: MXL_Service')}
           title="联系客服"
         >

@@ -8,4 +8,58 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f7f7f7;
+  color: #111;
+}
+
+.bw-shell {
+  background: #f7f7f7;
+}
+
+.bw-card {
+  border: 2px solid #000 !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  box-shadow: 4px 4px 0 #000 !important;
+}
+
+.bw-btn {
+  border: 2px solid #000 !important;
+  background: #000 !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 3px 3px 0 #000 !important;
+}
+
+.bw-btn-ghost {
+  border: 2px solid #000 !important;
+  background: #fff !important;
+  color: #000 !important;
+  border-radius: 12px !important;
+}
+
+.custom-tabs .ant-tabs-nav {
+  margin-bottom: 0 !important;
+  background: #fff !important;
+  border-bottom: 2px solid #000 !important;
+}
+
+.custom-tabs .ant-tabs-tab {
+  border: 2px solid #000 !important;
+  border-radius: 999px !important;
+  padding: 6px 12px !important;
+  margin: 0 4px 10px !important;
+}
+
+.custom-tabs .ant-tabs-tab-active {
+  background: #000 !important;
+}
+
+.custom-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #fff !important;
+}
+
+.custom-tabs .ant-tabs-ink-bar {
+  background: #000 !important;
+  height: 3px !important;
 }

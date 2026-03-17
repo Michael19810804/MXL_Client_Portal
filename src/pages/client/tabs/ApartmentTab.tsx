@@ -6,13 +6,9 @@ import {
   Row, 
   Col, 
   Tag,
-  List,
   Badge
 } from 'antd';
 import { 
-  HomeOutlined, 
-  WifiOutlined, 
-  CoffeeOutlined,
   EnvironmentOutlined,
   CheckCircleOutlined
 } from '@ant-design/icons';
@@ -52,7 +48,7 @@ const ApartmentTab: React.FC = () => {
       <Row gutter={[16, 16]}>
         {apartments.map((item, index) => (
           <Col xs={24} md={8} key={index}>
-            <Badge.Ribbon text="热门" color="red" className={index === 0 ? '' : 'hidden'}>
+            <Badge.Ribbon text="热门" color="black" className={index === 0 ? '' : 'hidden'}>
               <Card 
                 hoverable 
                 cover={
@@ -60,7 +56,7 @@ const ApartmentTab: React.FC = () => {
                     <img alt={item.title} src={item.image} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
                   </div>
                 }
-                className="h-full border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-all"
+                className="h-full bw-card overflow-hidden transition-all"
                 bodyStyle={{ padding: '16px' }}
               >
                 <div className="flex justify-between items-start mb-2">
@@ -70,7 +66,7 @@ const ApartmentTab: React.FC = () => {
                       <EnvironmentOutlined className="mr-1" /> {item.location}
                     </div>
                   </div>
-                  <div className="text-blue-600 font-bold whitespace-nowrap ml-2 text-sm md:text-base">
+                  <div className="text-black font-bold whitespace-nowrap ml-2 text-sm md:text-base">
                     {item.price}
                   </div>
                 </div>
@@ -85,28 +81,28 @@ const ApartmentTab: React.FC = () => {
 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {item.tags.map(tag => (
-                    <Tag key={tag} color="blue" className="mr-0 text-[10px]">{tag}</Tag>
+                    <Tag key={tag} className="mr-0 text-[10px] border border-black text-black bg-white">{tag}</Tag>
                   ))}
                 </div>
 
-                <Button type="primary" block size="middle" className="text-sm">查看房态</Button>
+                <Button type="primary" block size="middle" className="text-sm bw-btn">查看房态</Button>
               </Card>
             </Badge.Ribbon>
           </Col>
         ))}
       </Row>
 
-      <div className="bg-orange-50 p-4 md:p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 mt-4 md:mt-8">
+      <div className="bw-card p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 mt-4 md:mt-8">
         <div className="flex items-center gap-3 md:gap-4">
-          <div className="bg-white p-2 md:p-3 rounded-full shadow-sm text-orange-500">
-            <CoffeeOutlined className="text-xl md:text-2xl" />
+          <div className="bg-white p-2 md:p-3 rounded-full border-2 border-black">
+            <span className="text-xl md:text-2xl">🏠</span>
           </div>
           <div>
             <h4 className="font-bold text-gray-800 m-0 text-sm md:text-base">不仅是住宿，更是体验</h4>
             <p className="text-gray-500 text-xs md:text-sm m-0">预订满 7 天，赠送曼谷必吃美食指南及一张 BTS 交通卡。</p>
           </div>
         </div>
-        <Button size="large" className="w-full md:w-auto bg-orange-500 text-white border-none hover:bg-orange-600 text-sm md:text-base">
+        <Button size="large" className="w-full md:w-auto bw-btn text-sm md:text-base">
           咨询客服
         </Button>
       </div>

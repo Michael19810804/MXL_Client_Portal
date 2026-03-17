@@ -122,13 +122,13 @@ const Apply: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto py-8">
+    <div className="max-w-2xl mx-auto py-8 bw-shell">
       <div className="mb-8 text-center px-4">
         <h1 className="text-xl md:text-2xl font-bold mb-2">提交托管资料</h1>
         <p className="text-gray-500 text-sm md:text-base">请填写基础信息并上传文件，提交后即完成归档。</p>
       </div>
 
-      <Card className="shadow-sm mx-4 md:mx-0">
+      <Card className="bw-card mx-4 md:mx-0">
         <Form
           form={form}
           layout="vertical"
@@ -136,9 +136,9 @@ const Apply: React.FC = () => {
           requiredMark="optional"
           size="large"
         >
-          <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-100">
-            <h3 className="font-bold text-blue-800 mb-2 text-sm md:text-base">所需文件清单</h3>
-            <ul className="list-disc list-inside text-xs md:text-sm text-blue-700 space-y-1">
+          <div className="bg-[#f7f7f7] p-4 rounded-lg mb-6 border-2 border-black">
+            <h3 className="font-bold text-black mb-2 text-sm md:text-base">所需文件清单</h3>
+            <ul className="list-disc list-inside text-xs md:text-sm text-black space-y-1">
               <li>护照首页照片 (必需)</li>
               <li>地契复印件/照片 (必需)</li>
               <li>房屋户口本 (小蓝本) (必需)</li>
@@ -202,12 +202,12 @@ const Apply: React.FC = () => {
             <Dragger
               {...uploadProps}
               accept=".jpg,.jpeg,.png,.webp,.pdf"
-              className="bg-gray-50"
+              className="bg-white border-2 border-black rounded-xl"
               onChange={() => {
                 form.validateFields(['project']).catch(() => undefined);
               }}
             >
-              <p className="ant-upload-drag-icon"><UploadOutlined className="text-blue-500" /></p>
+              <p className="ant-upload-drag-icon"><UploadOutlined className="text-black" /></p>
               <p className="ant-upload-text text-sm">点击或拖拽上传项目参考图 (可选)</p>
             </Dragger>
           </Form.Item>
@@ -240,8 +240,8 @@ const Apply: React.FC = () => {
             rules={[{ required: true, message: '请上传护照首页' }]}
             tooltip="清晰的护照个人信息页照片"
           >
-            <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-gray-50">
-              <p className="ant-upload-drag-icon"><UploadOutlined className="text-blue-500" /></p>
+            <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-white border-2 border-black rounded-xl">
+              <p className="ant-upload-drag-icon"><UploadOutlined className="text-black" /></p>
               <p className="ant-upload-text text-sm">点击或拖拽上传护照</p>
             </Dragger>
           </Form.Item>
@@ -252,8 +252,8 @@ const Apply: React.FC = () => {
             rules={[{ required: true, message: '请上传地契文件' }]}
             tooltip="支持上传多张图片或PDF文件"
           >
-            <Dragger {...multipleUploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-gray-50">
-              <p className="ant-upload-drag-icon"><UploadOutlined className="text-blue-500" /></p>
+            <Dragger {...multipleUploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-white border-2 border-black rounded-xl">
+              <p className="ant-upload-drag-icon"><UploadOutlined className="text-black" /></p>
               <p className="ant-upload-text text-sm">点击或拖拽上传地契 (支持多选)</p>
             </Dragger>
           </Form.Item>
@@ -263,8 +263,8 @@ const Apply: React.FC = () => {
             label="房屋户口本 (小蓝本)"
             rules={[{ required: true, message: '请上传房屋户口本' }]}
           >
-            <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-gray-50">
-              <p className="ant-upload-drag-icon"><UploadOutlined className="text-blue-500" /></p>
+            <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-white border-2 border-black rounded-xl">
+              <p className="ant-upload-drag-icon"><UploadOutlined className="text-black" /></p>
               <p className="ant-upload-text text-sm">点击或拖拽上传小蓝本</p>
             </Dragger>
           </Form.Item>
@@ -274,8 +274,8 @@ const Apply: React.FC = () => {
             label="补充合同文件"
             tooltip="可上传已有合同或其他需要归档的补充文件"
           >
-            <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-gray-50">
-              <p className="ant-upload-drag-icon"><UploadOutlined className="text-blue-500" /></p>
+            <Dragger {...uploadProps} accept=".jpg,.jpeg,.png,.pdf" className="bg-white border-2 border-black rounded-xl">
+              <p className="ant-upload-drag-icon"><UploadOutlined className="text-black" /></p>
               <p className="ant-upload-text text-sm">点击或拖拽上传 (可选)</p>
             </Dragger>
           </Form.Item>
@@ -287,7 +287,7 @@ const Apply: React.FC = () => {
               block 
               size="large" 
               loading={loading}
-              className="h-12 text-lg font-semibold shadow-md active:scale-95 transition-transform"
+              className="h-12 text-lg font-semibold active:scale-95 transition-transform bw-btn"
             >
               提交申请
             </Button>
